@@ -1,0 +1,31 @@
+{
+  "name": "Paw Connect - Back",
+  "version": "1.0.0",
+  "description": "Projet apotheose back",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "db:create": "psql -U pawconnect -d pawconnect -f data/create_tables.sql",
+    "db:seeding": "psql -U pawconnect -d pawconnect -f data/seeding_tables.sql",
+    "db:reset": "pnpm run db:create && pnpm run db:seeding"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0",
+    "sanitize-html": "^2.13.0",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.1",
+    "nodemon": "^3.1.4"
+  }
+}
