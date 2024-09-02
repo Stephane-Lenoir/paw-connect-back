@@ -1,13 +1,23 @@
-import authService from "../services/authService.js";
+import { authService } from "../services/authService.js";
 
 export const register = async (req, res) => {
   try {
     const { user, token } = await authService.register(req.body);
     res.status(201).json({ user, token });
   } catch (error) {
-    res.status(400).json({
-      error: "Invalid registration data. Please check your information.",
-    });
+    console.error("Registration error:", error);
+    if (error.name === "SequelizeValidationError") {
+      const messages = error.errors.map((e) => e.message);
+      res.status(400).json({ error: messages });
+    } else if (error.name === "SequelizeUniqueConstraintError") {
+      res.status(400).json({ error: "Email already in use." });
+    } else {
+      res
+        .status(500)
+        .json({
+          error: "An error occurred during registration. Please try again.",
+        });
+    }
   }
 };
 

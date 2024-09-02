@@ -26,3 +26,7 @@ export const getOneAnimal = async (req, res) => {
 
   res.json(animal);
 };
+
+export const addAnimal = async (req, res) => {
+  res.status(200).json("Added animal");
+};

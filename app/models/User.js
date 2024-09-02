@@ -9,7 +9,7 @@ User.init(
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    firstName: {
+    firstname: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
@@ -24,7 +24,8 @@ User.init(
     },
   },
   {
-    sequelize: Sequelize,
+    sequelize,
     modelName: "user",
+    tableName: "user",
   }
 );

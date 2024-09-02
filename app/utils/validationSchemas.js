@@ -10,6 +10,6 @@ export const registerSchema = Joi.object({
 
 // Validation schema for login
 export const loginSchema = Joi.object({
-  email: Joi.string().email.required(),
+  email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
