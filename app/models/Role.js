@@ -3,12 +3,15 @@ import { sequelize } from "sequelize";
 
 export class Role extends Model { }
 
-Role.init ({
-    name:{
-        type:DataTypes.STRING,
-        allowNull: false,
-    }
-},  {
+Role.init (
+    {
+        name:{
+            type: DataTypes.STRING(100),
+            allowNull: false,
+        }
+    },  
+    {
         sequelize,
         tableName: "role"
-});
+    }
+);
