@@ -1,4 +1,4 @@
-import { Sequelize } from "../database.js";
+import { sequelize } from "../database.js";
 import { Model, DataTypes } from "sequelize";
 
 export class User extends Model {}
@@ -25,7 +25,6 @@ User.init(
   },
   {
     sequelize: Sequelize,
-    modelName: "User",
-    timestamps: false,
+    modelName: "user",
   }
 );
