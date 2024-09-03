@@ -1,3 +1,4 @@
+import { Association } from "sequelize";
 import { User, Role } from "../models/associations.js";
 
 export const getAllAssociations = async (req, res) => {
@@ -11,6 +12,22 @@ export const getAllAssociations = async (req, res) => {
       },
     });
     res.json(associations);
+  } catch (error) {
+    res.status(500).json({ error: "Une erreur est survenue" });
+  }
+};
+
+export const getOneAssociation = async (req, res) => {
+  try {
+    const association = await User.findOne({
+      include: {
+        model: Role,
+        as: "role",
+        where: { name: "association" },
+      },
+      where: { id: req.params.id },
+    });
+    res.json(association);
   } catch (error) {
     res.status(500).json({ error: "Une erreur est survenue" });
   }
