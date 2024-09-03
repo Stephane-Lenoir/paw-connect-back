@@ -13,3 +13,13 @@ export const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
+
+// Validation schema for search
+export const searchSchema = Joi.object({
+  species: Joi.string(),
+  location: Joi.string(),
+  gender: Joi.string(),
+  availability: Joi.boolean(),
+  race: Joi.string(),
+  age: Joi.number().integer().min(0).max(30),
+});
