@@ -19,6 +19,13 @@ export const getAllAssociations = async (req, res) => {
 
 // Method to retrieve data for a single association
 export const getOneAssociation = async (req, res) => {
+  const associationId = parseInt(req.params.id);
+
+  if (isNaN(associationId)) {
+    return res.status404.json({
+      error: "Association not found. Please verify the provided ID.",
+    });
+  }
   try {
     const association = await User.findOne({
       include: {
@@ -26,10 +33,17 @@ export const getOneAssociation = async (req, res) => {
         as: "role",
         where: { name: "association" },
       },
-      where: { id: req.params.id },
+      where: { id: associationId },
     });
+
+    if (!association) {
+      return res.status(404).json({
+        error: "Association not found. Please verify the provided ID.",
+      });
+    }
+
     res.json(association);
   } catch (error) {
-    res.status(500).json({ error: "Une erreur est survenue" });
+    res.status(500).json({ error: "An error has occurred." });
   }
 };
