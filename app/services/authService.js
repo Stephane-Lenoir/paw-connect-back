@@ -7,14 +7,17 @@ const JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME;
 const SALT_ROUNDS = 10;
 
 export const authService = {
+  // Use library bcrypt for the hashing
   async hashPassword(password) {
     return await bcrypt.hash(password, SALT_ROUNDS);
   },
 
+  // Use library bcrypt for compare
   async verifyPassword(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
   },
 
+  // Use jwt for the token generation
   generateToken(userId) {
     return jwt.sign({ id: userId }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION_TIME,

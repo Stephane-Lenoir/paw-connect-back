@@ -14,7 +14,7 @@ export const authenticateToken = async (req, res, next) => {
     req.user = decoded;
 
     const user = await User.findByPk(decoded.id);
-    if (!user) return res.sendStatus(403);
+    if (!user) return res.status(403);
     req.user = user;
     next();
   } catch (error) {
