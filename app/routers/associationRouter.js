@@ -7,9 +7,3 @@ export const router = Router();
 
 router.get("/associations", cw(associationController.getAllAssociations));
 router.get("/associations/:id", cw(associationController.getOneAssociation));
-
-router.post(
-  "/associations",
-  authenticateToken,
-  cw(associationController.addAssociation)
-);
