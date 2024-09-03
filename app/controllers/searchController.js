@@ -7,17 +7,9 @@ export const searchFilter = async (req, res) => {
 
   const searchFilters = {};
 
-  if (species) {
-    searchFilters.species = species;
-  }
-
-  if (location) {
-    searchFilters.location = location;
-  }
-
-  if (gender) {
-    searchFilters.gender = gender;
-  }
+  if (species) searchFilters.species = species;
+  if (location) searchFilters.location = location;
+  if (gender) searchFilters.gender = gender;
 
   const filters = await Animal.findAll({ where: searchFilters });
   res.json(filters);

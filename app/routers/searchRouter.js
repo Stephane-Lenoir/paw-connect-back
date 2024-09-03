@@ -4,4 +4,4 @@ import { searchFilter } from "../controllers/searchController.js";
 
 export const router = Router();
 
-router.get("/search", cw(searchFilter));
+router.post("/search", cw(searchFilter));
