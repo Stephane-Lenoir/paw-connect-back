@@ -25,8 +25,9 @@ export const authService = {
   },
 
   async register(userData) {
-    const role_id = 2;
-    if (userData.type === "association") {
+    let role_id = 2; // let au lieu de const
+    if (userData.role_id === "Oui") {
+      // modifié car userData.type != role_id
       role_id = 3;
     }
 
