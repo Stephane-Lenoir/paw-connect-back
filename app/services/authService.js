@@ -35,13 +35,12 @@ export const authService = {
       ...userData,
       password: hashedPassword,
       role_id,
-    });
-    const token = this.generateToken(user.id);
-    return { email: user.email, id: user.id, role_id, token };
+    });    
+    return { email: user.email, id: user.id, role_id };
   },
 
   async login(email, password) {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } }); // ajouter le rôle
     if (!user) {
       throw new Error("User not found");
     }
@@ -49,8 +48,8 @@ export const authService = {
     if (!isValidPassword) {
       throw new Error("Invalid password");
     }
-    const token = this.generateToken(user.id);
-
+    const token = this.generateToken(user.id); // user.role_id, user.role_id.name => a verifier
+    
     delete user.dataValues.password;
     return { user, token };
   },

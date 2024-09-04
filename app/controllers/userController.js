@@ -4,7 +4,7 @@ import { authService } from "../services/authService.js";
 export const getAllMembers = async (req, res) => {    
   const members = await User.findAll({
     attributes: { exclude: ["password"] },
-    where: { role_id: 2 },
+    where: { role_id: 2 }, // il faudrait modifier le "2" en dur par user.id par exemple, revoir Etienne pour ça
     });
   res.json(members);    
 };
@@ -26,7 +26,7 @@ export const updateMember = async (req, res) => {
       }
       await member.save();
 
-      delete member.dataValues.password
+      delete member.dataValues.password;
 
       res.json(member);     
 }

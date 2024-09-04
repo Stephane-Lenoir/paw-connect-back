@@ -2,8 +2,8 @@ import { authService } from "../services/authService.js";
 
 export const register = async (req, res) => {
   try {
-    const { user, token } = await authService.register(req.body);
-    res.status(201).json({ user, token });
+    const { user } = await authService.register(req.body);
+    res.status(201).json({ user });
   } catch (error) {
     console.error("Registration error:", error);
     if (error.name === "SequelizeValidationError") {

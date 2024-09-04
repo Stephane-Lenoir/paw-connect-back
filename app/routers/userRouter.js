@@ -11,5 +11,3 @@ export const router = Router();
 router.get("/profiles", cw(getAllMembers));
 router.put("/profiles/:id",validateRequest(updateSchema), cw(updateMember));
 router.delete("/profiles/:id", cw(deleteMember));
-
-// on recupére bien les données tu peux voir sur mon écran si besoin
