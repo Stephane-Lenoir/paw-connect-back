@@ -23,3 +23,8 @@ export const searchSchema = Joi.object({
   race: Joi.string(),
   age: Joi.number().integer().min(0).max(30),
 });
+
+export const updateSchema = Joi.object({
+  name: Joi.string().required().min(2).max(100),
+  password: Joi.string().required(),
+});
