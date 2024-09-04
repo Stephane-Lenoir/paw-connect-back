@@ -35,8 +35,8 @@ export const authService = {
       ...userData,
       password: hashedPassword,
       role_id,
-    });    
-    return { email: user.email, id: user.id, role_id };
+    });
+    return { user: { email: user.email, id: user.id, role_id } };
   },
 
   async login(email, password) {
@@ -49,12 +49,12 @@ export const authService = {
       throw new Error("Invalid password");
     }
     const token = this.generateToken(user.id); // user.role_id, user.role_id.name => a verifier
-    
+
     delete user.dataValues.password;
     return { user, token };
   },
 
-  logout() {    
+  logout() {
     return true;
   },
 };

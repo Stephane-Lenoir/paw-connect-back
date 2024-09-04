@@ -12,11 +12,9 @@ export const register = async (req, res) => {
     } else if (error.name === "SequelizeUniqueConstraintError") {
       res.status(400).json({ error: "Email already in use." });
     } else {
-      res
-        .status(500)
-        .json({
-          error: "An error occurred during registration. Please try again.",
-        });
+      res.status(500).json({
+        error: "An error occurred during registration. Please try again.",
+      });
     }
   }
 };
@@ -37,10 +35,8 @@ export const login = async (req, res) => {
         .json({ error: "An error occured during login. Please try again." });
     }
   }
-  
 };
 
-
-export const logout = async (req, res) => { 
-    res.json({ message: "Logout successful." });  
+export const logout = async (req, res) => {
+  res.json({ message: "Logout successful." });
 };
