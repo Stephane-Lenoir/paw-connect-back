@@ -1,10 +1,10 @@
-import { Association } from "sequelize";
 import { User, Role } from "../models/associations.js";
 
 // Method to retrieve association data
 export const getAllAssociations = async (req, res) => {
   try {
     const associations = await User.findAll({
+      attributes: { exclude: ["password"] },
       include: {
         model: Role,
         as: "role",
@@ -28,6 +28,7 @@ export const getOneAssociation = async (req, res) => {
   }
   try {
     const association = await User.findOne({
+      attributes: { exclude: ["password"] },
       include: {
         model: Role,
         as: "role",
