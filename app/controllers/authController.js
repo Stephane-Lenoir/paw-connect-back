@@ -37,4 +37,10 @@ export const login = async (req, res) => {
         .json({ error: "An error occured during login. Please try again." });
     }
   }
+  
+};
+
+
+export const logout = async (req, res) => { 
+    res.json({ message: "Logout successful." });  
 };
