@@ -54,4 +54,8 @@ export const authService = {
     delete user.dataValues.password;
     return { user, token };
   },
+
+  logout() {    
+    return true;
+  },
 };
