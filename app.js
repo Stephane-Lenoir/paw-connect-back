@@ -20,6 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 await app.listen(port);
 console.log(`🚀 Server listening at http://localhost:${port}`);
