@@ -30,6 +30,7 @@ export const authService = {
       // modifié car userData.type != role_id
       role_id = 3;
     }
+    // console.log(userData);
 
     const hashedPassword = await this.hashPassword(userData.password);
     const user = await User.create({

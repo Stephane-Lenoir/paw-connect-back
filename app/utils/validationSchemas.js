@@ -29,3 +29,17 @@ export const updateSchema = Joi.object({
   name: Joi.string().required().min(2).max(100),
   password: Joi.string().required(),
 });
+
+// Schema for creation animal
+export const createAnimalSchema = Joi.object({
+  name:Joi.string().required().min(2).max(100),
+  species:Joi.string().required().min(2).max(100),
+  description:Joi.string().required().min(2).max(255),
+  race:Joi.string().required().min(2).max(100),
+  gender:Joi.string().required().min(2).max(25),
+  location:Joi.string().required().min(2).max(255),
+  photo:Joi.string().required().min(1).max(255),
+  birthday:Joi.number().integer().required().min(0).max(30),
+  availability:Joi.boolean(),
+  user_id:Joi.number(),
+});
