@@ -69,7 +69,7 @@ export const updateAnimal = async (req, res) => {
   }
   if (!name || !description || !availability)
     {
-      return res.status(400).json({ error: "Name, description et disponibilité obligatoire" });
+      return res.status(400).json({ error: "Tous les champs obligatoires ne sont pas renseignés" });
     }  
     // Update the animal's information  
     animal.name = name; 
