@@ -1,5 +1,4 @@
-import { Animal } from "../models/Animal.js";
-
+import { Animal } from "../models/associations.js";
 
 export const getAllAnimals = async (req, res) => {
   // Give all Animals in DB
@@ -29,19 +28,27 @@ export const getOneAnimal = async (req, res) => {
 };
 
 export const addAnimal = async (req, res) => {
-  
-  const { photo, name, species, description, race, gender, location, birthday, availability } = req.body;
+  const {
+    photo,
+    name,
+    species,
+    description,
+    race,
+    gender,
+    location,
+    birthday,
+    availability,
+  } = req.body;
 
-  
-  // console.log(req.user)
+  // console.log(req.body);
 
-  // const userId = req.user.id
+  // const userId = req.user.id;
 
   const userId = 3;
-  
-  
-  const createdAnimal = await Animal.create ({
-    name, 
+
+  const createdAnimal = await Animal.create({
+    // ...req.body équivalent à
+    name,
     species,
     description,
     race,
@@ -50,42 +57,49 @@ export const addAnimal = async (req, res) => {
     photo,
     birthday,
     availability,
-    user_id : userId
+    user_id: userId,
   });
   res.status(200).json(`Animal ${createdAnimal.name} ajouté`);
 };
 
-
 export const updateAnimal = async (req, res) => {
-  
-  const animalId = parseInt(req.params.id);
-  
-  const { photo, name, species, description, race, gender, location, birthday, availability } = req.body;
+  const animalId = Number(req.params.id);
+
+  const {
+    photo,
+    name,
+    species,
+    description,
+    race,
+    gender,
+    location,
+    birthday,
+    availability,
+  } = req.body;
 
   const animal = await Animal.findByPk(animalId);
-  
+
   if (!animal) {
     return res.status(404).json({ error: "Animal not found." });
   }
-  if (!name || !description || !availability)
-    {
-      return res.status(400).json({ error: "Tous les champs obligatoires ne sont pas renseignés" });
-    }  
-    // Update the animal's information  
-    animal.name = name; 
-    animal.species = species;
-    animal.description = description;
-    animal.race = race;
-    animal.gender = gender;
-    animal.location = location;
-    animal.photo = photo;
-    animal.birthday = birthday;
-    animal.availability = availability;
-    // Save the updated animal to the database
-    await animal.save();
-    res.json(animal);
+  // if (!name || !description || !availability)
+  //   {
+  //     return res.status(400).json({ error: "Tous les champs obligatoires ne sont pas renseignés" });
+  //   }
+  // Update the animal's information
+  animal.name = name;
+  animal.species = species;
+  animal.description = description;
+  animal.race = race;
+  animal.gender = gender;
+  animal.location = location;
+  animal.photo = photo;
+  animal.birthday = birthday;
+  animal.availability = availability;
+  // Save the updated animal to the database
+  await animal.save();
+  res.json(animal);
 };
-
 
 export const deleteAnimal = async (req, res) => {
   const { id } = req.params;
@@ -95,5 +109,4 @@ export const deleteAnimal = async (req, res) => {
   }
   await animal.destroy();
   res.json({ message: "Animal deleted successfully" });
-  
-}
+};

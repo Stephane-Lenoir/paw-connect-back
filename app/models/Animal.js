@@ -15,27 +15,27 @@ Animal.init(
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     race: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     gender: {
       type: DataTypes.STRING(25),
-      allowNull: false,
+      allowNull: true,
     },
     location: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
     photo: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     birthday: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     availability: {
       type: DataTypes.BOOLEAN,

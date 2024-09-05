@@ -32,14 +32,26 @@ export const updateSchema = Joi.object({
 
 // Schema for creation animal
 export const createAnimalSchema = Joi.object({
-  name:Joi.string().required().min(2).max(100),
-  species:Joi.string().required().min(2).max(100),
-  description:Joi.string().required().min(2).max(255),
-  race:Joi.string().required().min(2).max(100),
-  gender:Joi.string().required().min(2).max(25),
-  location:Joi.string().required().min(2).max(255),
-  photo:Joi.string().required().min(1).max(255),
-  birthday:Joi.number().integer().required().min(0).max(30),
-  availability:Joi.boolean(),
-  user_id:Joi.number(),
+  name: Joi.string().required().min(2).max(100),
+  species: Joi.string().required().min(2).max(100),
+  description: Joi.string().required().min(2).max(255),
+  race: Joi.string().required().min(2).max(100),
+  gender: Joi.string().required().min(2).max(25),
+  location: Joi.string().required().min(2).max(255),
+  photo: Joi.string().required().min(1).max(255),
+  birthday: Joi.number().integer().required().min(0).max(30),
+  availability: Joi.boolean().required(),
+  user_id: Joi.number(),
+});
+
+export const updateAnimalSchema = Joi.object({
+  name: Joi.string().required().min(2).max(100),
+  species: Joi.string().required().min(2).max(100),
+  description: Joi.string().optional().min(2).max(255),
+  race: Joi.string().optional().min(2).max(100),
+  gender: Joi.string().optional().min(2).max(25),
+  location: Joi.string().optional().min(2).max(255),
+  photo: Joi.string().optional().min(1).max(255),
+  birthday: Joi.number().integer().optional().min(0).max(30),
+  availability: Joi.boolean().required(),
 });
