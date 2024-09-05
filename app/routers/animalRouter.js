@@ -9,3 +9,4 @@ router.get("/animals", cw(animalController.getAllAnimals));
 router.get("/animals/:id", cw(animalController.getOneAnimal));
 
 router.post("/animals", authenticateToken, cw(animalController.addAnimal));
+router.put("/animals/:id", authenticateToken, cw(animalController.updateAnimal))

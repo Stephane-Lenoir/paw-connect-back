@@ -30,3 +30,12 @@ export const getOneAnimal = async (req, res) => {
 export const addAnimal = async (req, res) => {
   res.status(200).json("Added animal");
 };
+
+
+export const updateAnimal = async (req, res) => {
+  res.status(200).json("Animal uptaded")
+}
+
+export const deleteAnimal = async (req, res) => {
+  res.status(200).json("Animal deleted")
+}
