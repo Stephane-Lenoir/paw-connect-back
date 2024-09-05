@@ -33,7 +33,7 @@ export const authService = {
 
     const hashedPassword = await this.hashPassword(userData.password);
     const user = await User.create({
-      ...userData,
+      ...userData, // correspond à userData.name, userData.firstname, userData.email, userData.password, userData.role_id
       password: hashedPassword,
       role_id,
     });
@@ -53,9 +53,5 @@ export const authService = {
 
     delete user.dataValues.password;
     return { user, token };
-  },
-
-  logout() {
-    return true;
   },
 };
