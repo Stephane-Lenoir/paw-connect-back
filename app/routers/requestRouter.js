@@ -8,3 +8,4 @@ router.get("/requests", cw(requestController.getAllRequests));
 router.get("/requests/:id", cw(requestController.getOneRequest));
 router.post("/requests", cw(requestController.addRequest));
 router.put("/requests/:id", cw(requestController.updateRequestStatus));
+router.delete("/requests/:id", cw(requestController.deleteRequest));

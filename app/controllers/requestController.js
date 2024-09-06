@@ -68,3 +68,18 @@ export const updateRequestStatus = async (req, res) => {
 };
 
 // Delete a request
+export const deleteRequest = async (req, res) => {
+  const requestId = parseInt(req.params.id);
+
+  const request = await Request.findByPk(requestId);
+
+  if (!request) {
+    return res
+      .status(404)
+      .json({ error: "Request not found. Please verify the provided ID." });
+  }
+
+  await request.destroy();
+
+  res.json({ message: "Request deleted" });
+};
