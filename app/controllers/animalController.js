@@ -1,8 +1,16 @@
-import { Animal } from "../models/associations.js";
+import { Animal, User } from "../models/associations.js";
 
 export const getAllAnimals = async (req, res) => {
   // Give all Animals in DB
-  const animals = await Animal.findAll();
+  const animals = await Animal.findAll({
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["name", "email", "role_id"],
+      },
+    ],
+  });
   res.json(animals);
 };
 
