@@ -41,5 +41,30 @@ export const addRequest = async (req, res) => {
 };
 
 // Update a request
+export const updateRequestStatus = async (req, res) => {
+  const requestId = parseInt(req.params.id);
+  const { status } = req.body;
+
+  const stateStatus = ["Acceptée", "Refusée"];
+
+  // Vérification du statut
+  if (status !== stateStatus[0] && status !== stateStatus[1]) {
+    return res
+      .status(400)
+      .json({ error: "The status must be 'Acceptée' or 'Refusée'" });
+  }
+
+  const request = await Request.findByPk(requestId);
+
+  if (!request) {
+    return res
+      .status(404)
+      .json({ error: "Request not found. Please verify the provided ID." });
+  }
+
+  await request.update({ status });
+
+  res.json(request);
+};
 
 // Delete a request
