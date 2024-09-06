@@ -11,7 +11,7 @@ Request.init(
     },
     status: {
       type: DataTypes.STRING(25),
-      allowNull: true,
+      allowNull: false,
       defaultValue: "En attente", // Par défaut la demande est en attente
     },
   },
