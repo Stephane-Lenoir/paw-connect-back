@@ -1,9 +1,18 @@
-import {Animal} from "../models/Animal.js";
+import { Animal, User } from "../models/associations.js";
 
 // Displaying 5 animals for the home page available on the road "/"
 
 export const getAllAnimals = async (req,res) => {
-    const animals = await Animal.findAll({limit:5});
+    const animals = await Animal.findAll({
+        limit: 3,
+        include: [
+            {
+                model: User,
+                as: "user",
+                attributes: ["name", "email", "role_id"],
+            },
+        ],
+    });
 
     if(!animals) {
         return res.status(404).json('Aucun Animal dans la base de donné');
