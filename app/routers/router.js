@@ -4,6 +4,7 @@ import { router as animalRouter } from "./animalRouter.js";
 import { router as authRouter } from "./authRouter.js";
 import { router as searchRouter } from "./searchRouter.js";
 import { router as userRouter } from "./userRouter.js";
+import { router as requestRouter } from "./requestRouter.js";
 
 export const router = Router();
 
@@ -13,3 +14,4 @@ router.use(animalRouter);
 router.use(authRouter);
 router.use(searchRouter);
 router.use(userRouter);
+router.use(requestRouter);
