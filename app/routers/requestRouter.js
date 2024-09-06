@@ -6,3 +6,4 @@ export const router = Router();
 
 router.get("/requests", cw(requestController.getAllRequests));
 router.get("/requests/:id", cw(requestController.getOneRequest));
+router.post("/requests", cw(requestController.addRequest));

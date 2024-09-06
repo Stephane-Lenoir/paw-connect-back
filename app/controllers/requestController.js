@@ -1,4 +1,4 @@
-import { Request } from "../models/associations.js";
+import { Request } from "../models/Request.js";
 
 // Give all Requests in DB
 export const getAllRequests = async (req, res) => {
@@ -28,6 +28,17 @@ export const getOneRequest = async (req, res) => {
 };
 
 // Add a request
+export const addRequest = async (req, res) => {
+  const { user_id, animal_id, date } = req.body;
+
+  const createdRequest = await Request.create({
+    user_id,
+    animal_id,
+    date,
+  });
+
+  res.status(201).json(`Request created with ID: ${createdRequest.id}`);
+};
 
 // Update a request
 
