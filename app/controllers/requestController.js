@@ -3,7 +3,7 @@ import { Request } from "../models/Request.js";
 // Give all Requests in DB
 export const getAllRequests = async (req, res) => {
   const requests = await Request.findAll();
-  res.json(requests);
+  res.status(200).json(requests);
 };
 
 // Give one request by ID
@@ -11,7 +11,7 @@ export const getOneRequest = async (req, res) => {
   const requestId = parseInt(req.params.id);
 
   if (isNaN(requestId)) {
-    return res.status404.json({
+    return res.status(404).json({
       error: "Request not found. Please verify the provided ID.",
     });
   }
@@ -24,7 +24,7 @@ export const getOneRequest = async (req, res) => {
       .json({ error: "Request not found. Please verify the provided ID." });
   }
 
-  res.json(request);
+  res.status(200).json(request);
 };
 
 // Add a request
@@ -64,7 +64,7 @@ export const updateRequestStatus = async (req, res) => {
 
   await request.update({ status });
 
-  res.json(request);
+  res.status(200).json(request);
 };
 
 // Delete a request
@@ -81,5 +81,5 @@ export const deleteRequest = async (req, res) => {
 
   await request.destroy();
 
-  res.json({ message: "Request deleted" });
+  res.status(204).json({ message: "Request deleted" });
 };

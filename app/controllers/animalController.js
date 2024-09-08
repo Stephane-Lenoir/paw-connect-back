@@ -11,7 +11,7 @@ export const getAllAnimals = async (req, res) => {
       },
     ],
   });
-  res.json(animals);
+  res.status(200).json(animals);
 };
 
 export const getOneAnimal = async (req, res) => {
@@ -19,7 +19,7 @@ export const getOneAnimal = async (req, res) => {
   const animalId = parseInt(req.params.id);
 
   if (isNaN(animalId)) {
-    return res.status404.json({
+    return res.status(404).json({
       error: "Animal not found. Please verify the provided ID.",
     });
   }
@@ -32,7 +32,7 @@ export const getOneAnimal = async (req, res) => {
       .json({ error: "Animal not found. Please verify the provided ID." });
   }
 
-  res.json(animal);
+  res.status(200).json(animal);
 };
 
 export const addAnimal = async (req, res) => {
@@ -48,11 +48,9 @@ export const addAnimal = async (req, res) => {
     availability,
   } = req.body;
 
-  // console.log(req.body);
+  const userId = req.user.id;
 
-  // const userId = req.user.id;
-
-  const userId = 3;
+  // const userId = 3;
 
   const createdAnimal = await Animal.create({
     // ...req.body équivalent à
@@ -67,7 +65,7 @@ export const addAnimal = async (req, res) => {
     availability,
     user_id: userId,
   });
-  res.status(200).json(`Animal ${createdAnimal.name} ajouté`);
+  res.status(201).json(`Animal ${createdAnimal.name} added successfully`);
 };
 
 export const updateAnimal = async (req, res) => {
@@ -106,7 +104,7 @@ export const updateAnimal = async (req, res) => {
   animal.availability = availability;
   // Save the updated animal to the database
   await animal.save();
-  res.json(animal);
+  res.status(200).json(animal);
 };
 
 export const deleteAnimal = async (req, res) => {
@@ -116,5 +114,5 @@ export const deleteAnimal = async (req, res) => {
     return res.status(404).json({ error: "Animal not found" });
   }
   await animal.destroy();
-  res.json({ message: "Animal deleted successfully" });
+  res.status(204).json({ message: "Animal deleted successfully" });
 };

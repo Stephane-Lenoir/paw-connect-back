@@ -24,5 +24,5 @@ export const searchFilter = async (req, res) => {
   }
 
   const filters = await Animal.findAll({ where: searchFilters });
-  res.json(filters);
+  res.status(200).json(filters);
 };

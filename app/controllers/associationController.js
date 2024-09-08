@@ -11,9 +11,9 @@ export const getAllAssociations = async (req, res) => {
         where: { name: "association" },
       },
     });
-    res.json(associations);
+    res.status(200).json(associations);
   } catch (error) {
-    res.status(500).json({ error: "Une erreur est survenue" });
+    res.status(500).json({ error: "An error has occurred." });
   }
 };
 
@@ -22,7 +22,7 @@ export const getOneAssociation = async (req, res) => {
   const associationId = parseInt(req.params.id);
 
   if (isNaN(associationId)) {
-    return res.status404.json({
+    return res.status(404).json({
       error: "Association not found. Please verify the provided ID.",
     });
   }
@@ -43,7 +43,7 @@ export const getOneAssociation = async (req, res) => {
       });
     }
 
-    res.json(association);
+    res.status(200).json(association);
   } catch (error) {
     res.status(500).json({ error: "An error has occurred." });
   }

@@ -6,6 +6,10 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME;
 const SALT_ROUNDS = 10;
 
+// On défini les roles en constantes
+const ROLE_MEMBER = 2;
+const ROLE_ASSOCIATION = 3;
+
 export const authService = {
   // Use library bcrypt for the hashing
   async hashPassword(password) {
@@ -25,12 +29,18 @@ export const authService = {
   },
 
   async register(userData) {
-    let role_id = 2; // let au lieu de const
-    if (userData.role_id === "Oui") {
-      // modifié car userData.type != role_id
-      role_id = 3;
-    }
-    // console.log(userData);
+    let role_id =
+      userData.isAssociation === "Oui" ? ROLE_ASSOCIATION : ROLE_MEMBER;
+
+    // Par défaut, on considère que c'est un membre standard
+    // let role_id = ROLE_MEMBER;
+
+    // Vérifier si l'utilisateur est une association
+    // if (userData.isAssociation === "Oui") {
+
+    // Si oui, on change le rôle pour association
+    //   role_id = ROLE_ASSOCIATION;
+    // }
 
     const hashedPassword = await this.hashPassword(userData.password);
     const user = await User.create({
