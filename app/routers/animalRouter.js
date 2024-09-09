@@ -15,6 +15,7 @@ router.get("/animals/:id", cw(animalController.getOneAnimal));
 
 router.post(
   "/animals",
+  authenticateToken,
   validateRequest(createAnimalSchema),
   cw(animalController.addAnimal)
 );

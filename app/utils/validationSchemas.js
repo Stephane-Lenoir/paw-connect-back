@@ -39,7 +39,7 @@ export const createAnimalSchema = Joi.object({
   gender: Joi.string().required().min(2).max(25),
   location: Joi.string().required().min(2).max(255),
   photo: Joi.string().required().min(1).max(255),
-  birthday: Joi.number().integer().required().min(0).max(30),
+  birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
   user_id: Joi.number(),
 });
@@ -52,6 +52,6 @@ export const updateAnimalSchema = Joi.object({
   gender: Joi.string().optional().min(2).max(25),
   location: Joi.string().optional().min(2).max(255),
   photo: Joi.string().optional().min(1).max(255),
-  birthday: Joi.number().integer().optional().min(0).max(30),
+  birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
 });
