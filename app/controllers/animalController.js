@@ -50,6 +50,11 @@ export const addAnimal = async (req, res) => {
 
   const userId = req.user.id;
 
+  let photoUrl = null;
+  if (req.file) {
+    photoUrl = `/data/uploads/${req.file.filename}`;
+  }
+
   // const userId = 3;
 
   const createdAnimal = await Animal.create({
@@ -60,7 +65,7 @@ export const addAnimal = async (req, res) => {
     race,
     gender,
     location,
-    photo,
+    photo: photoUrl,
     birthday,
     availability,
     user_id: userId,

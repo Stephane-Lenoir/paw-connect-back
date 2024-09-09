@@ -38,7 +38,7 @@ export const createAnimalSchema = Joi.object({
   race: Joi.string().required().min(2).max(100),
   gender: Joi.string().required().min(2).max(25),
   location: Joi.string().required().min(2).max(255),
-  photo: Joi.string().required().min(1).max(255),
+  photo: Joi.string().optional().min(1).max(255),
   birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
   user_id: Joi.number(),
