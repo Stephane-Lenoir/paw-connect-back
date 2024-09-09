@@ -7,6 +7,7 @@ import {
   createAnimalSchema,
   updateAnimalSchema,
 } from "../utils/validationSchemas.js";
+import { upload } from "../utils/multerConfig.js";
 
 export const router = Router();
 
@@ -17,11 +18,13 @@ router.get("/animals/:id", authenticateToken, cw(animalController.getAnimalsByUs
 router.post(
   "/animals",
   authenticateToken,
+  upload.single("photo"),
   validateRequest(createAnimalSchema),
   cw(animalController.addAnimal)
 );
 router.put(
   "/animals/:id",
+  upload.single("photo"),
   validateRequest(updateAnimalSchema),
   cw(animalController.updateAnimal)
 );
