@@ -41,7 +41,7 @@ export const createAnimalSchema = Joi.object({
   photo: Joi.string().optional().min(1).max(255),
   birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
-  user_id: Joi.number(),
+  user_id: Joi.number().integer(),
 });
 
 export const updateAnimalSchema = Joi.object({
