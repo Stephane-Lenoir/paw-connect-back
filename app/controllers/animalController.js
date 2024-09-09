@@ -52,7 +52,7 @@ export const addAnimal = async (req, res) => {
 
   let photoUrl = null;
   if (req.file) {
-    photoUrl = `/data/uploads/${req.file.filename}`;
+    photoUrl = `/uploads/${req.file.filename}`;
   }
 
   // const userId = 3;
@@ -90,6 +90,11 @@ export const updateAnimal = async (req, res) => {
 
   const animal = await Animal.findByPk(animalId);
 
+  let photoUrl = null;
+  if (req.file) {
+    photoUrl = `/uploads/${req.file.filename}`;
+  }
+
   if (!animal) {
     return res.status(404).json({ error: "Animal not found." });
   }
@@ -104,7 +109,7 @@ export const updateAnimal = async (req, res) => {
   animal.race = race;
   animal.gender = gender;
   animal.location = location;
-  animal.photo = photo;
+  animal.photo = photoUrl;
   animal.birthday = birthday;
   animal.availability = availability;
   // Save the updated animal to the database
