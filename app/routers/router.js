@@ -5,6 +5,7 @@ import { router as authRouter } from "./authRouter.js";
 import { router as searchRouter } from "./searchRouter.js";
 import { router as userRouter } from "./userRouter.js";
 import { router as requestRouter } from "./requestRouter.js";
+import { router as associationRouter } from "./associationRouter.js";
 
 export const router = Router();
 
@@ -12,6 +13,7 @@ export const router = Router();
 router.use(homeRouter);
 router.use(animalRouter);
 router.use(authRouter);
+router.use(associationRouter);
 router.use(searchRouter);
 router.use(userRouter);
 router.use(requestRouter);
