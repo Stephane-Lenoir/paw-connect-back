@@ -116,3 +116,15 @@ export const deleteAnimal = async (req, res) => {
   await animal.destroy();
   res.status(204).json({ message: "Animal deleted successfully" });
 };
+
+
+export const getAnimalsByUserId = async (req, res) => {
+  const userId = parseInt(req.params.id); 
+  const animals = await Animal.findAll({
+    where: {
+      user_id: userId,
+    },
+  }); 
+  
+  res.status(200).json(animals);
+};

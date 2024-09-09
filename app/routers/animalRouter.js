@@ -11,7 +11,8 @@ import {
 export const router = Router();
 
 router.get("/animals", cw(animalController.getAllAnimals));
-router.get("/animals/:id", cw(animalController.getOneAnimal));
+// router.get("/animals/:id", cw(animalController.getOneAnimal));
+router.get("/animals/:id", authenticateToken, cw(animalController.getAnimalsByUserId));
 
 router.post(
   "/animals",
