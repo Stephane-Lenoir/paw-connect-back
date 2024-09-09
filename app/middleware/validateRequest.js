@@ -8,3 +8,22 @@ export const validateRequest = (schema) => {
     next();
   };
 };
+
+export const fileRequest = (schema) => {
+  return (req, res, next) => {
+    if (req.file) {
+      const { error: fileError } = schema.validate({
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+      });
+
+      if (fileError) {
+        console.log(fileError);
+        return res.status(400).json({
+          message: `Erreur de validation du fichier : ${fileError.details[0].message}`,
+        });
+      }
+      next();
+    }
+  };
+};

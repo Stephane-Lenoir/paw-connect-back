@@ -38,10 +38,16 @@ export const createAnimalSchema = Joi.object({
   race: Joi.string().required().min(2).max(100),
   gender: Joi.string().required().min(2).max(25),
   location: Joi.string().required().min(2).max(255),
-  photo: Joi.string().optional().min(1).max(255),
   birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
   user_id: Joi.number().integer(),
+});
+
+export const photoAnimalSchema = Joi.object({
+  mimetype: Joi.string()
+    .valid("image/jpeg", "image/png", "image/jpg", "image/gif")
+    .required(),
+  size: Joi.number().max(1024 * 1024 * 1), // 1 pour 1024 mo
 });
 
 export const updateAnimalSchema = Joi.object({
@@ -51,7 +57,6 @@ export const updateAnimalSchema = Joi.object({
   race: Joi.string().optional().min(2).max(100),
   gender: Joi.string().optional().min(2).max(25),
   location: Joi.string().optional().min(2).max(255),
-  photo: Joi.string().optional().min(1).max(255),
   birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
 });
