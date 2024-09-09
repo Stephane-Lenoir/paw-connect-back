@@ -6,6 +6,8 @@ import { router } from "./app/routers/router.js";
 
 const app = express();
 
+app.use(express.static("public"));
+
 const corsOptions = {
   origin: "http://localhost:3001", // URL front
   credentials: true,
