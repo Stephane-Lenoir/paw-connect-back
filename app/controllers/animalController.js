@@ -90,18 +90,16 @@ export const updateAnimal = async (req, res) => {
 
   const animal = await Animal.findByPk(animalId);
 
-  let photoUrl = null;
-  if (req.file) {
-    photoUrl = `/uploads/${req.file.filename}`;
-  }
-
   if (!animal) {
     return res.status(404).json({ error: "Animal not found." });
   }
-  // if (!name || !description || !availability)
-  //   {
-  //     return res.status(400).json({ error: "Tous les champs obligatoires ne sont pas renseignés" });
-  //   }
+
+  // Update photo only if a new file is uploaded
+  if (req.file) {
+    animal.photo = `/uploads/${req.file.filename}`;
+  }
+  // If no new file is provided, the existing photo remains unchanged
+
   // Update the animal's information
   animal.name = name;
   animal.species = species;
@@ -109,10 +107,11 @@ export const updateAnimal = async (req, res) => {
   animal.race = race;
   animal.gender = gender;
   animal.location = location;
-  animal.photo = photoUrl;
+  animal.photo;
   animal.birthday = birthday;
   animal.availability = availability;
-  // Save the updated animal to the database
+
+  // Save the changes to the database
   await animal.save();
   res.status(200).json(animal);
 };
