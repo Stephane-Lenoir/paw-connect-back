@@ -26,8 +26,9 @@ export const searchSchema = Joi.object({
 });
 
 export const updateSchema = Joi.object({
-  name: Joi.string().required().min(2).max(100),
-  password: Joi.string().required(),
+  name: Joi.string().optional().min(2).max(100),
+  password: Joi.string().optional(),
+  firstname: Joi.string().optional().min(2).max(100),
 });
 
 // Schema for creation animal

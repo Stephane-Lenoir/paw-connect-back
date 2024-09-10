@@ -32,7 +32,7 @@ export const getOneMember = async (req, res) => {
 
 export const updateMember = async (req, res) => {
   const { id } = req.params;
-  const { name, password } = req.body;
+  const { name, firstname, password } = req.body;
   const member = await User.findByPk(id);
   if (!member) {
     return res.status(404).json({ error: "Member not found" });
@@ -40,6 +40,11 @@ export const updateMember = async (req, res) => {
   if (name) {
     member.name = name;
   }
+
+  if (firstname) {
+    member.firstname = firstname;
+  }
+
   if (password) {
     const hashedPassword = await authService.hashPassword(password);
     member.password = hashedPassword;

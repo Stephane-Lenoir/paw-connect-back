@@ -16,5 +16,10 @@ export const router = Router();
 router.get("/profiles", cw(getAllMembers));
 router.get("/profiles/roles", cw(getAllMembersByRoleId));
 router.get("/profiles/:id", authenticateToken, cw(getOneMember));
-router.put("/profiles/:id", validateRequest(updateSchema), cw(updateMember));
+router.put(
+  "/profiles/:id",
+  authenticateToken,
+  validateRequest(updateSchema),
+  cw(updateMember)
+);
 router.delete("/profiles/:id", cw(deleteMember));
