@@ -7,10 +7,12 @@ import { Request } from "./Request.js";
 Role.hasMany(User, {
   foreignKey: "role_id",
   as: "users",
+  onDelete: "CASCADE",
 });
 User.belongsTo(Role, {
   foreignKey: "role_id",
   as: "role",
+  onDelete: "CASCADE",
 });
 
 // User <-> Animal (One-to-Many)
@@ -22,16 +24,19 @@ User.hasMany(Animal, {
 Animal.belongsTo(User, {
   foreignKey: "user_id",
   as: "user",
+  onDelete: "CASCADE",
 });
 
 // User <-> Request (One-to-Many)
 User.hasMany(Request, {
   foreignKey: "user_id",
   as: "requests",
+  onDelete: "CASCADE",
 });
 Request.belongsTo(User, {
   foreignKey: "user_id",
   as: "user",
+  onDelete: "CASCADE",
 });
 
 // Request <-> Animal (One-to-Many)
@@ -43,6 +48,7 @@ Animal.hasMany(Request, {
 Request.belongsTo(Animal, {
   foreignKey: "animal_id",
   as: "request",
+  onDelete: "CASCADE",
 });
 
 export { Animal, Role, User, Request };

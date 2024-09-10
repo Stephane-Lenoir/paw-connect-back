@@ -1,4 +1,4 @@
-import { Request } from "../models/Request.js";
+import { Request } from "../models/associations.js";
 
 // Give all Requests in DB
 export const getAllRequests = async (req, res) => {

@@ -1,4 +1,4 @@
-import { Animal } from "../models/Animal.js";
+import { Animal } from "../models/associations.js";
 import { Op } from "sequelize";
 
 export const searchFilter = async (req, res) => {
