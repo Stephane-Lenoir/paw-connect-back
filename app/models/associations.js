@@ -17,6 +17,7 @@ User.belongsTo(Role, {
 User.hasMany(Animal, {
   foreignKey: "user_id",
   as: "animals",
+  onDelete: "CASCADE",
 });
 Animal.belongsTo(User, {
   foreignKey: "user_id",
@@ -37,6 +38,7 @@ Request.belongsTo(User, {
 Animal.hasMany(Request, {
   foreignKey: "animal_id",
   as: "animals",
+  onDelete: "CASCADE",
 });
 Request.belongsTo(Animal, {
   foreignKey: "animal_id",
