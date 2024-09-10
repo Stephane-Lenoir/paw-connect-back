@@ -9,6 +9,20 @@ export const getAllMembers = async (req, res) => {
   res.status(200).json(members);
 };
 
+export const getOneMember = async (req, res) => {
+  const { id } = req.params;
+  if (req.user.id !== parseInt(id)) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+  const member = await User.findByPk(id, {
+    attributes: { exclude: ["password"] },
+  });
+  if (!member) {
+    return res.status(404).json({ error: "Member not found" });
+  }
+  res.status(200).json(member);
+};
+
 export const updateMember = async (req, res) => {
   const { id } = req.params;
   const { name, password } = req.body;
