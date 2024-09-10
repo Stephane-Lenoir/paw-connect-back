@@ -4,6 +4,13 @@ import { authService } from "../services/authService.js";
 export const getAllMembers = async (req, res) => {
   const members = await User.findAll({
     attributes: { exclude: ["password"] },
+  });
+  res.status(200).json(members);
+};
+
+export const getAllMembersByRoleId = async (req, res) => {
+  const members = await User.findAll({
+    attributes: { exclude: ["password"] },
     where: { role_id: 2 }, // il faudrait modifier le "2" en dur par user.id par exemple, revoir Etienne pour ça
   });
   res.status(200).json(members);
