@@ -5,16 +5,16 @@ import {
   updateMember,
   deleteMember,
   getOneMember,
-  getAllMembersByRoleId,
+  // getAllMembersByRoleId,
 } from "../controllers/userController.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 import { updateSchema } from "../utils/validationSchemas.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
+import { authenticateToken, isAdmin } from "../middleware/authMiddleware.js";
 
 export const router = Router();
 
-router.get("/profiles/getAll", cw(getAllMembers));
-router.get("/profiles/roles/", cw(getAllMembersByRoleId));
+router.get("/profiles/getAll", authenticateToken, isAdmin, cw(getAllMembers));
+// router.get("/profiles/roles/", cw(getAllMembersByRoleId));
 router.get("/profiles/getOne", authenticateToken, cw(getOneMember));
 router.put(
   "/profiles/:id",
@@ -22,4 +22,4 @@ router.put(
   validateRequest(updateSchema),
   cw(updateMember)
 );
-router.delete("/profiles/:id", cw(deleteMember));
+router.delete("/profiles/", authenticateToken, cw(deleteMember));

@@ -26,4 +26,23 @@ export const authenticateToken = async (req, res, next) => {
   }
 };
 
-export const checkRole = async (req, res, next) => {};
+export const checkRole = async (req, res, next) => {
+  if (!req.user) return res.status(401).json({ error: "You need to log in" });
+  const dbUser = await User.findByPk(req.user.id);
+  if (dbUser.role_id !== req.user.id)
+    return res.status(401).json({ error: "Unauthorized access" });
+  next();
+};
+
+export const isAdmin = (req, res, next) => {
+  console.log(req.user);
+  if (req.user.role_id !== 1)
+    return res.status(401).json({ error: "Unauthorized access" });
+  next();
+};
+
+export const isAssoc = (req, res, next) => {
+  if (req.user.role_id !== 3)
+    return res.status(401).json({ error: "Unauthorized access" });
+  next();
+};
