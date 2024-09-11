@@ -17,7 +17,7 @@ export const getAllMembersByRoleId = async (req, res) => {
 };
 
 export const getOneMember = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
   if (req.user.id !== parseInt(id)) {
     return res.status(403).json({ error: "Forbidden" });
   }

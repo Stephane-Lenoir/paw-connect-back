@@ -13,9 +13,9 @@ import { authenticateToken } from "../middleware/authMiddleware.js";
 
 export const router = Router();
 
-router.get("/profiles", cw(getAllMembers));
-router.get("/profiles/roles", cw(getAllMembersByRoleId));
-router.get("/profiles/:id", authenticateToken, cw(getOneMember));
+router.get("/profiles/getAll", cw(getAllMembers));
+router.get("/profiles/roles/", cw(getAllMembersByRoleId));
+router.get("/profiles/getOne", authenticateToken, cw(getOneMember));
 router.put(
   "/profiles/:id",
   authenticateToken,

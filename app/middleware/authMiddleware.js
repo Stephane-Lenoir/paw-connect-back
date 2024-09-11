@@ -25,3 +25,5 @@ export const authenticateToken = async (req, res, next) => {
     res.status(403); // Forbidden
   }
 };
+
+export const checkRole = async (req, res, next) => {};

@@ -60,7 +60,7 @@ export const authService = {
     if (!isValidPassword) {
       throw new Error("Invalid password");
     }
-    const token = this.generateToken(user.id); // user.role_id, user.role_id.name => a verifier
+    const token = "Bearer " + this.generateToken(user.id); // user.role_id, user.role_id.name => a verifier
 
     delete user.dataValues.password;
     return { user, token };
