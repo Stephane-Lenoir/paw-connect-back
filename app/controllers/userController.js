@@ -57,13 +57,43 @@ export const updateMember = async (req, res) => {
 };
 
 export const deleteMember = async (req, res) => {
-  const { id } = req.user;
-  const member = await User.findByPk(id);
-  if (member.id !== id || req.user.role_id !== 1)
-    res.status(401).json({ error: "Unauthorized access" });
-  if (!member) {
+  const requestingUserId = req.user.id;
+  const requestingUserRole = req.user.role_id;
+  const userIdToDelete = req.params.id;
+
+  // Vérifier si l'utilisateur à supprimer existe
+  const memberToDelete = await User.findByPk(userIdToDelete);
+
+  if (!memberToDelete) {
     return res.status(404).json({ error: "Member not found" });
   }
-  await member.destroy();
-  res.status(204).json({ message: "Member deleted" });
+
+  // Convertir les IDs en nombres pour une comparaison sûre
+  const requestingUserIdNum = Number(requestingUserId);
+  const userIdToDeleteNum = Number(userIdToDelete);
+
+  if (requestingUserRole === 1) {
+    if (requestingUserIdNum === userIdToDeleteNum) {
+      return res
+        .status(401)
+        .json({ error: "Admin cannot delete their own account" });
+    }
+  } else {
+    if (requestingUserIdNum !== userIdToDeleteNum) {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
+  }
+
+  await memberToDelete.destroy();
+
+  return res.status(204).json({ message: "Member deleted successfully" });
+  // const { id } = req.user;
+  // const member = await User.findByPk(id);
+  // if (member.id !== id || req.user.role_id !== 1)
+  //   res.status(401).json({ error: "Unauthorized access" });
+  // if (!member) {
+  //   return res.status(404).json({ error: "Member not found" });
+  // }
+  // await member.destroy();
+  // res.status(204).json({ message: "Member deleted" });
 };

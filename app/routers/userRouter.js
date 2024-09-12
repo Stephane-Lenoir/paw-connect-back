@@ -22,4 +22,4 @@ router.put(
   validateRequest(updateSchema),
   cw(updateMember)
 );
-router.delete("/profiles/", authenticateToken, cw(deleteMember));
+router.delete("/profiles/:id", authenticateToken, cw(deleteMember));
