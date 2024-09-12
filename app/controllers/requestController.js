@@ -29,7 +29,8 @@ export const getOneRequest = async (req, res) => {
 
 // Add a request
 export const addRequest = async (req, res) => {
-  const { user_id, animal_id, date } = req.body;
+  const { animal_id, date } = req.body;
+  const user_id = req.user.id;
 
   const createdRequest = await Request.create({
     user_id,
