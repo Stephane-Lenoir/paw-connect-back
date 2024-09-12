@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "db:create": "psql -U pawconnect -d pawconnect -f data/create_tables.sql",
-    "db:seeding": "psql -U pawconnect -d pawconnect -f data/seeding_tables.sql",
+    "db:seeding": "node data/seedingDatabase.js",
     "db:reset": "pnpm run db:create && pnpm run db:seeding"
   },
   "keywords": [],

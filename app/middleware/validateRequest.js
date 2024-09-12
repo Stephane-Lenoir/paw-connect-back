@@ -23,7 +23,7 @@ export const fileRequest = (schema) => {
           message: `Erreur de validation du fichier : ${fileError.details[0].message}`,
         });
       }
-      next();
     }
+    next();
   };
 };

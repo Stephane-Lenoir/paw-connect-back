@@ -22,8 +22,9 @@ export const authService = {
   },
 
   // Use jwt for the token generation
-  generateToken(userId) {
-    return jwt.sign({ id: userId }, JWT_SECRET, {
+  generateToken(user) {
+    const { id, role_id } = user;
+    return jwt.sign({ id, role_id }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION_TIME,
     });
   },
@@ -60,7 +61,7 @@ export const authService = {
     if (!isValidPassword) {
       throw new Error("Invalid password");
     }
-    const token = this.generateToken(user.id); // user.role_id, user.role_id.name => a verifier
+    const token = "Bearer " + this.generateToken(user);
 
     delete user.dataValues.password;
     return { user, token };
