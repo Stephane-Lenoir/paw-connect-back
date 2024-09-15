@@ -5,20 +5,15 @@ export class Donation extends Model {}
 
 Donation.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     amount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    donor_name: {
+    donorName: {  // Changé de donor_name à donorName
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    donor_email: {
+    donorEmail: {  // Changé de donor_email à donorEmail
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -30,11 +25,7 @@ Donation.init(
       type: DataTypes.STRING(20),
       defaultValue: 'pending',
     },
-    transaction_id: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
-    user_id: {
+    userId: {  // Changé de user_id à userId
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -42,20 +33,11 @@ Donation.init(
         key: 'id',
       },
     },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   },
   {
     sequelize,
     modelName: "donation",
     tableName: "donation",
-    timestamps: true,
-    underscored: true,
+    underscored: true,  // Ceci transformera automatiquement camelCase en snake_case pour la base de données
   }
 );

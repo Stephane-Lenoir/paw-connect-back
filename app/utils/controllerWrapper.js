@@ -3,6 +3,7 @@ export function controllerWrapper(mdw) {
     try {
       await mdw(req, res, next);
     } catch (error) {
+      console.error("Erreur capturée dans controllerWrapper:", err);
       console.error(error);
       res
         .status(500)

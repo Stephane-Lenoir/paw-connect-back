@@ -1,33 +1,33 @@
 import { Donation, User } from "../models/associations.js";
 
 export const createDonation = async (req, res) => {
-  console.log("createDonation controller called with body:", req.body);
-  const { amount, donorName, donorEmail, message, userId } = req.body;
-
+  console.log("Requête de don reçue:", req.body);
   try {
-    console.log("Looking for recipient with userId:", userId);
+    const { amount, donorName, donorEmail, message, userId } = req.body;
+
+    console.log("Recherche de l'utilisateur avec l'ID:", userId);
     const recipient = await User.findByPk(userId);
     if (!recipient) {
-      console.log("Recipient not found for userId:", userId);
+      console.log("Utilisateur non trouvé pour l'ID:", userId);
       return res.status(404).json({ error: "Recipient not found" });
     }
-    console.log("Recipient found:", recipient.name);
+    console.log("Utilisateur trouvé:", recipient.name);
 
-    console.log("Creating new donation");
+    console.log("Création d'un nouveau don");
     const donation = await Donation.create({
       amount,
       donorName,
       donorEmail,
       message,
-      user_id: userId,
+      userId,
       status: 'pending',
     });
 
-    console.log("Donation created successfully:", donation);
+    console.log("Don créé avec succès:", donation);
     res.status(201).json(donation);
   } catch (error) {
-    console.error("Error in createDonation:", error);
-    res.status(400).json({ error: error.message });
+    console.error("Erreur lors de la création du don:", error);
+    res.status(500).json({ error: "Erreur interne du serveur", details: error.message });
   }
 };
 
