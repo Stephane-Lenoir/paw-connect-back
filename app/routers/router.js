@@ -18,10 +18,4 @@ router.use(associationRouter);
 router.use(searchRouter);
 router.use(userRouter);
 router.use(requestRouter);
-router.use((req, res, next) => {
-    if (req.path.startsWith('/donations')) {
-      console.log(`Route donations appelée: ${req.method} ${req.path}`);
-    }
-    next();
-  });
 router.use(donationRouter);

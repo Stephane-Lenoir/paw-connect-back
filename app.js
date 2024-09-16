@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { router } from "./app/routers/router.js";
-import { sequelize } from "./app/database.js";  // Ajoutez cette ligne
+import { sequelize } from "./app/database.js";  
 
 const app = express();
 
@@ -41,7 +41,6 @@ const port = process.env.PORT || 3000;
 
 // Ajoutez ce bloc de code pour la synchronisation Sequelize
 sequelize.sync({ alter: true }).then(() => {
-  console.log("Base de données synchronisée");
   app.listen(port, () => {
     console.log(`🚀 Server listening at http://localhost:${port}`);
   });
