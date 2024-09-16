@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { controllerWrapper as cw } from "../utils/controllerWrapper.js";
 import * as donationController from "../controllers/donationController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
+import { authenticateToken, optionalAuthenticateToken } from "../middleware/authMiddleware.js";
 import { validateRequest } from "../middleware/validateRequest.js";
 import { donationSchema } from "../utils/validationSchemas.js";
 
-export const router = Router();
+const router = Router();
 
-router.post("/donations", authenticateToken,validateRequest(donationSchema),cw(donationController.createDonation));
+router.post("/donations", optionalAuthenticateToken, validateRequest(donationSchema), cw(donationController.createDonation));
+router.get("/donations/user/me", authenticateToken, cw(donationController.getDonationsByUser));
 
-router.get("/donations/user/:userId", authenticateToken, cw(donationController.getDonationsByUser));
+export { router };

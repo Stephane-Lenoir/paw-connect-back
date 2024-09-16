@@ -11,7 +11,7 @@ import { validateRequest } from "../middleware/validateRequest.js";
 import { updateSchema } from "../utils/validationSchemas.js";
 import { authenticateToken, isAdmin } from "../middleware/authMiddleware.js";
 
-export const router = Router();
+const router = Router();
 
 router.get("/profiles/getAll", authenticateToken, isAdmin, cw(getAllMembers));
 // router.get("/profiles/roles/", cw(getAllMembersByRoleId));
@@ -23,3 +23,5 @@ router.put(
   cw(updateMember)
 );
 router.delete("/profiles/:id", authenticateToken, cw(deleteMember));
+
+export { router };
