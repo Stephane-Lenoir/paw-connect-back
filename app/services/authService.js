@@ -6,22 +6,39 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME;
 const SALT_ROUNDS = 10;
 
-// On défini les roles en constantes
 const ROLE_MEMBER = 2;
 const ROLE_ASSOCIATION = 3;
 
+function parseDuration(duration) {
+  // Takes the last character as the unit
+  const unit = duration.slice(-1);
+  // Takes all characters except the last one and converts them to a number
+  const value = parseInt(duration.slice(0, -1));
+
+  // Converts to seconds according to the unit
+  switch (unit) {
+    case "d":
+      return value * 24 * 60 * 60;
+    case "h":
+      return value * 60 * 60;
+    case "m":
+      return value * 60;
+    case "s":
+      return value;
+    default:
+      return 24 * 60 * 60;
+  }
+}
+
 export const authService = {
-  // Use library bcrypt for the hashing
   async hashPassword(password) {
     return await bcrypt.hash(password, SALT_ROUNDS);
   },
 
-  // Use library bcrypt for compare
   async verifyPassword(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
   },
 
-  // Use jwt for the token generation
   generateToken(user) {
     const { id, role_id } = user;
     return jwt.sign({ id, role_id }, JWT_SECRET, {
@@ -33,19 +50,9 @@ export const authService = {
     let role_id =
       userData.isAssociation === "Oui" ? ROLE_ASSOCIATION : ROLE_MEMBER;
 
-    // Par défaut, on considère que c'est un membre standard
-    // let role_id = ROLE_MEMBER;
-
-    // Vérifier si l'utilisateur est une association
-    // if (userData.isAssociation === "Oui") {
-
-    // Si oui, on change le rôle pour association
-    //   role_id = ROLE_ASSOCIATION;
-    // }
-
     const hashedPassword = await this.hashPassword(userData.password);
     const user = await User.create({
-      ...userData, // correspond à userData.name, userData.firstname, userData.email, userData.password, userData.role_id
+      ...userData,
       password: hashedPassword,
       role_id,
     });
@@ -53,17 +60,23 @@ export const authService = {
   },
 
   async login(email, password) {
-    const user = await User.findOne({ where: { email } }); // ajouter le rôle
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       throw new Error("User not found");
     }
+
     const isValidPassword = await this.verifyPassword(password, user.password);
     if (!isValidPassword) {
       throw new Error("Invalid password");
     }
+
     const token = "Bearer " + this.generateToken(user);
 
     delete user.dataValues.password;
-    return { user, token };
+
+    const expirationTime =
+      Date.now() + parseDuration(JWT_EXPIRATION_TIME) * 1000;
+
+    return { user, token, expirationTime };
   },
 };

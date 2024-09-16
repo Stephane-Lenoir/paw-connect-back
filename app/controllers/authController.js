@@ -22,8 +22,11 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { user, token } = await authService.login(email, password);
-    res.status(200).json({ user, token });
+    const { user, token, expirationTime } = await authService.login(
+      email,
+      password
+    );
+    res.status(200).json({ user, token, expirationTime });
   } catch (error) {
     if (error.message === "User not found") {
       res.status(404).json({ error: "User not found. Check email." });
