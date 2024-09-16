@@ -32,10 +32,10 @@ app.use((req, res, next) => {
 
 app.use("/api", router);
 
-app.use((err, req, res, next) => {
-  console.error('Erreur non gérée:', err);
-  res.status(500).json({ error: "Une erreur interne s'est produite" });
-});
+//app.use((err, req, res, next) => {
+  //console.error('Erreur non gérée:', err);
+  //res.status(500).json({ error: "Une erreur interne s'est produite" });
+//});
 
 const port = process.env.PORT || 3000;
 
