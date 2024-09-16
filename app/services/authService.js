@@ -9,7 +9,7 @@ const SALT_ROUNDS = 10;
 const ROLE_MEMBER = 2;
 const ROLE_ASSOCIATION = 3;
 
-function parseDuration(duration) {
+const parseDuration = (duration) => {
   // Takes the last character as the unit
   const unit = duration.slice(-1);
   // Takes all characters except the last one and converts them to a number
@@ -28,7 +28,7 @@ function parseDuration(duration) {
     default:
       return 24 * 60 * 60;
   }
-}
+};
 
 export const authService = {
   async hashPassword(password) {
