@@ -14,7 +14,7 @@ export const getAllRequests = async (req, res) => {
     },
   {
     model: Animal,
-    as: "request",
+    as: "animal",
     attributes: ["name"],
   }]
   });
