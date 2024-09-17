@@ -1,8 +1,23 @@
-import { Request } from "../models/associations.js";
+import { Association } from "sequelize";
+import { Request, User, Animal } from "../models/associations.js";
 
 // Give all Requests in DB
 export const getAllRequests = async (req, res) => {
-  const requests = await Request.findAll();
+  const requests = await Request.findAll({
+
+
+    include: [
+      {
+      model: User,
+      as:"user",
+      attributes: ["name"],
+    },
+  {
+    model: Animal,
+    as: "animal",
+    attributes: ["name"],
+  }]
+  });
   res.status(200).json(requests);
 };
 

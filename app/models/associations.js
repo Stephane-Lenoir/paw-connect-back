@@ -47,7 +47,7 @@ Animal.hasMany(Request, {
 });
 Request.belongsTo(Animal, {
   foreignKey: "animal_id",
-  as: "request",
+  as: "animal",
   onDelete: "CASCADE",
 });
 
