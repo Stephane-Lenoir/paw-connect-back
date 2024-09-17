@@ -47,7 +47,7 @@ CREATE TABLE "donation" (
     "message" TEXT,
     "status" VARCHAR(20) DEFAULT 'pending',
     "transaction_id" VARCHAR(255),
-    "user_id" INT NOT NULL REFERENCES "user"("id") ON DELETE CASCADE,
+    "user_id" INT REFERENCES "user"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

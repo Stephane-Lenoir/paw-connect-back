@@ -1,5 +1,6 @@
 import { Donation, User } from "../models/associations.js";
 import stripe from '../utils/stripeConfig.js';
+import { controllerWrapper } from '../utils/controllerWrapper.js';
 
 export const createDonation = async (req, res) => {
   const { amount, donorName, donorEmail, message, userId } = req.body;
@@ -40,41 +41,65 @@ export const getDonationsByUser = async (req, res) => {
   res.status(200).json(donations);
 };
 
-export const checkSessionStatus = async (req, res) => {
+// export const checkSessionStatus = controllerWrapper(async (req, res) => {
+//   const { sessionId } = req.params;
+  
+//   const session = await stripe.checkout.sessions.retrieve(sessionId);
+  
+//   if (session.payment_status === 'paid') {
+//     const donationData = {
+//       amount: session.amount_total / 100,
+//       donorName: session.metadata.donorName,
+//       donorEmail: session.metadata.donorEmail,
+//       message: session.metadata.message,
+//       // userId: session.metadata.userId !== 'anonymous' ? session.metadata.userId : null,
+//       // associationId: session.metadata.associationId,
+//       status: 'completed',
+//       stripeSessionId: session.id
+//     };
+
+//     if (!donationData.userId) {
+//       donationData.userId = 0; 
+//     }
+//       // 2. Ou omettre complètement le champ si c'est acceptable
+//       // if (!donationData.userId) {
+//       //   delete donationData.userId;
+//       // }
+//       const donation = await Donation.create(donationData);
+    
+//     res.json({ status: 'success', donationId: donation.id });
+//   } else {
+//     res.status(400).json({ status: 'unpaid' });
+//   }
+// });
+
+export const checkSessionStatus = controllerWrapper(async (req, res) => {
   const { sessionId } = req.params;
   
-  try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-    
-    if (session.payment_status === 'paid') {
-      const donationData = {
-        amount: session.amount_total / 100,
-        donorName: session.metadata.donorName,
-        donorEmail: session.metadata.donorEmail,
-        message: session.metadata.message,
-        userId: session.metadata.userId !== 'anonymous' ? session.metadata.userId : null,
-        associationId: session.metadata.associationId,
-        status: 'completed',
-        stripeSessionId: session.id
-      };
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  
+  if (session.payment_status === 'paid') {
+    const donationData = {
+      amount: session.amount_total / 100,
+      donorName: session.metadata.donorName,
+      donorEmail: session.metadata.donorEmail,
+      message: session.metadata.message,
+      status: 'completed',
+      stripeSessionId: session.id
+    };
 
-      // Si userId est null, vous pouvez soit :
-      // 1. Définir une valeur par défaut
-      if (!donationData.userId) {
-        donationData.userId = 0; // Ou une autre valeur par défaut appropriée
-      }
-      // 2. Ou omettre complètement le champ si c'est acceptable
-      // if (!donationData.userId) {
-      //   delete donationData.userId;
-      // }
-      const donation = await Donation.create(donationData);
-      
-      res.json({ status: 'success', donationId: donation.id });
-    } else {
-      res.status(400).json({ status: 'unpaid' });
+    if (session.metadata.userId !== 'anonymous') {
+      donationData.userId = parseInt(session.metadata.userId);
     }
-  } catch (error) {
-    console.error('Error in checkSessionStatus:', error);
-    res.status(500).json({ error: error.message });
+
+    if (session.metadata.associationId) {
+      donationData.associationId = parseInt(session.metadata.associationId);
+    }
+
+    const donation = await Donation.create(donationData);
+    
+    res.json({ status: 'success', donationId: donation.id });
+  } else {
+    res.status(400).json({ status: 'unpaid' });
   }
-};
+});

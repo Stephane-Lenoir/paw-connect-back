@@ -32,10 +32,6 @@ app.use((req, res, next) => {
 
 app.use("/api", router);
 
-//app.use((err, req, res, next) => {
-  //console.error('Erreur non gérée:', err);
-  //res.status(500).json({ error: "Une erreur interne s'est produite" });
-//});
 
 const port = process.env.PORT || 3000;
 
@@ -48,6 +44,3 @@ sequelize.sync({ alter: true }).then(() => {
   console.error("Erreur lors de la synchronisation de la base de données:", error);
 });
 
-// Supprimez ou commentez ces lignes
-// await app.listen(port);
-// console.log(`🚀 Server listening at http://localhost:${port}`);
