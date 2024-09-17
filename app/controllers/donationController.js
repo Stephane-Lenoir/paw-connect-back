@@ -1,7 +1,7 @@
 import { Donation, User } from "../models/associations.js";
-import { controllerWrapper } from "../utils/controllerWrapper.js";  
+import stripe from '../utils/stripeConfig.js';
 
-export const createDonation = controllerWrapper(async (req, res) => {
+export const createDonation = async (req, res) => {
   const { amount, donorName, donorEmail, message, userId } = req.body;
   
   let donationData = {
@@ -13,10 +13,8 @@ export const createDonation = controllerWrapper(async (req, res) => {
   };
 
   if (req.user) {
-    // Si l'utilisateur est authentifié, utilisez son ID
     donationData.userId = req.user.id;
   } else if (userId) {
-    // Si un userId est fourni pour un don anonyme, vérifiez que l'utilisateur existe
     const recipient = await User.findByPk(userId);
     if (!recipient) {
       return res.status(404).json({ error: "Recipient not found" });
@@ -27,10 +25,10 @@ export const createDonation = controllerWrapper(async (req, res) => {
   const donation = await Donation.create(donationData);
 
   res.status(201).json(donation);
-});
+};
 
-export const getDonationsByUser = controllerWrapper(async (req, res) => {
-  const userId = req.user.id; // Utilise l'ID de l'utilisateur authentifié
+export const getDonationsByUser = async (req, res) => {
+  const userId = req.user.id;
   console.log("Fetching donations for user:", userId);
 
   const donations = await Donation.findAll({
@@ -40,4 +38,43 @@ export const getDonationsByUser = controllerWrapper(async (req, res) => {
 
   console.log("Donations found:", donations);
   res.status(200).json(donations);
-});
+};
+
+export const checkSessionStatus = async (req, res) => {
+  const { sessionId } = req.params;
+  
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    
+    if (session.payment_status === 'paid') {
+      const donationData = {
+        amount: session.amount_total / 100,
+        donorName: session.metadata.donorName,
+        donorEmail: session.metadata.donorEmail,
+        message: session.metadata.message,
+        userId: session.metadata.userId !== 'anonymous' ? session.metadata.userId : null,
+        associationId: session.metadata.associationId,
+        status: 'completed',
+        stripeSessionId: session.id
+      };
+
+      // Si userId est null, vous pouvez soit :
+      // 1. Définir une valeur par défaut
+      if (!donationData.userId) {
+        donationData.userId = 0; // Ou une autre valeur par défaut appropriée
+      }
+      // 2. Ou omettre complètement le champ si c'est acceptable
+      // if (!donationData.userId) {
+      //   delete donationData.userId;
+      // }
+      const donation = await Donation.create(donationData);
+      
+      res.json({ status: 'success', donationId: donation.id });
+    } else {
+      res.status(400).json({ status: 'unpaid' });
+    }
+  } catch (error) {
+    console.error('Error in checkSessionStatus:', error);
+    res.status(500).json({ error: error.message });
+  }
+};

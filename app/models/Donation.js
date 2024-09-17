@@ -27,7 +27,7 @@ Donation.init(
     },
     userId: {  // Changé de user_id à userId
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'user',
         key: 'id',
