@@ -70,7 +70,8 @@ const animals = [
     race: "Siamois",
     gender: "Femelle",
     location: "Lyon",
-    photo: "https://cataas.com/cat/says/Luna",
+    photo:
+      "https://www.woopets.fr/assets/races/000/380/bannerbig2021/siamois_2.jpg",
     birthday: "2019-08-22",
     availability: true,
     user_id: 6,
@@ -95,7 +96,8 @@ const animals = [
     race: "Persan",
     gender: "Mâle",
     location: "Toulouse",
-    photo: "https://cataas.com/cat/says/Milo",
+    photo:
+      "https://files.oaiusercontent.com/file-4bcsgi3q5do6hXEHSNPGGEmx?se=2024-09-18T07%3A26%3A40Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De2ee8221-a6e6-4080-b91e-f67d17b0eec5.webp&sig=4%2BfQC5SB8n9HCWCTKuTDlhAqTkusNEHkKyLw6X2M7UM%3D",
     birthday: "2018-11-30",
     availability: true,
     user_id: 6,
