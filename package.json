@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app.js",
     "db:create": "psql -U pawconnect -d pawconnect -f data/create_tables.sql",
     "db:seeding": "node data/seedingDatabase.js",
