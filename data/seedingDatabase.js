@@ -97,7 +97,7 @@ const animals = [
     gender: "Mâle",
     location: "Toulouse",
     photo:
-      "https://files.oaiusercontent.com/file-4bcsgi3q5do6hXEHSNPGGEmx?se=2024-09-18T07%3A26%3A40Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De2ee8221-a6e6-4080-b91e-f67d17b0eec5.webp&sig=4%2BfQC5SB8n9HCWCTKuTDlhAqTkusNEHkKyLw6X2M7UM%3D",
+      "https://www.noelshack.com/2024-38-3-1726645136-e2ee8221-a6e6-4080-b91e-f67d17b0eec5-1.jpg",
     birthday: "2018-11-30",
     availability: true,
     user_id: 6,
