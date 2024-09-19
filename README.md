@@ -29,4 +29,5 @@ CREATE DATABASE my_db OWNER my_user;
   - create_tables.sql : permet de créer les tables de la base de données.
   - seeding_tables.sql : permet de remplir les tables avec les données.
 - package.json contient nos dépendances et nos scripts.
+- pour générer un token dans un terminal : `node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"` et le rentrer dans votre .env
 ```

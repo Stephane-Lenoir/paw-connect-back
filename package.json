@@ -5,9 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app.js",
     "db:create": "psql -U pawconnect -d pawconnect -f data/create_tables.sql",
-    "db:seeding": "psql -U pawconnect -d pawconnect -f data/seeding_tables.sql",
+    "db:seeding": "node data/seedingDatabase.js",
     "db:reset": "pnpm run db:create && pnpm run db:seeding"
   },
   "keywords": [],
@@ -20,6 +21,7 @@
     "express": "^4.19.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "multer": "1.4.5-lts.1",
     "pg": "^8.12.0",
     "sanitize-html": "^2.13.0",
     "sequelize": "^6.37.3"
