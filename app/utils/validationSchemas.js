@@ -6,7 +6,7 @@ export const registerSchema = Joi.object({
   firstname: Joi.string().required().min(2).max(100),
   email: Joi.string().email().required().max(255),
   password: Joi.string().required().min(12).max(255),
-  isAssociation: Joi.string().valid("Oui", "Non").required(), // schema modifié
+  isAssociation: Joi.string().valid("Oui", "Non").required(),
 });
 
 // Validation schema for login

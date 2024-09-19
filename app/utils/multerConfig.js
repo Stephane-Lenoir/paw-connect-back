@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 
-// Configuration du stockage
+// Configuring storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/uploads");
@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
   },
 });
 
-// Configuration de Multer
+// Configuration Multer
 export const upload = multer({
   storage: storage,
-  limits: { fileSize: 1 * 1024 * 1024 }, // Limite de taille de fichier à 1MB
-  // Filtre par types de fichiers
+  limits: { fileSize: 1 * 1024 * 1024 }, // Limit file size to 1MB
+  // Filter by file types
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|gif/;
     const mimetype = fileTypes.test(file.mimetype);

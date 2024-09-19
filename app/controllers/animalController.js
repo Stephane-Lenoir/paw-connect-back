@@ -57,7 +57,7 @@ export const addAnimal = async (req, res) => {
   // const userId = 3;
 
   const createdAnimal = await Animal.create({
-    // ...req.body équivalent à
+    // ...req.body (same)
     name,
     species,
     description,

@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authenticateToken = async (req, res, next) => {
-  // On récupère le token du header d'autorisation de la requete
+  // We retrieve the token from the authorization header of the request
   const authHeader = req.headers["authorization"];
 
   if (!authHeader) {
     return res.status(401).json({ error: "Authentication token missing" });
   }
 
-  // On extrait le token du header
+  // We extract the token from the header
   const token = authHeader?.split(" ")[1];
 
   if (!token) {

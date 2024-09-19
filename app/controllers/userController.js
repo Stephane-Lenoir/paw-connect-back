@@ -53,14 +53,14 @@ export const deleteMember = async (req, res) => {
   const requestingUserRole = req.user.role_id;
   const userIdToDelete = req.params.id;
 
-  // Vérifier si l'utilisateur à supprimer existe
+  // Verfiy if the member to delete exists
   const memberToDelete = await User.findByPk(userIdToDelete);
 
   if (!memberToDelete) {
     return res.status(404).json({ error: "Member not found" });
   }
 
-  // Convertir les IDs en nombres pour une comparaison sûre
+  // Convert IDs to numbers for safe comparison
   const requestingUserIdNum = Number(requestingUserId);
   const userIdToDeleteNum = Number(userIdToDelete);
 
