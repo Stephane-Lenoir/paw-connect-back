@@ -8,14 +8,6 @@ export const getAllMembers = async (req, res) => {
   res.status(200).json(members);
 };
 
-// export const getAllMembersByRoleId = async (req, res) => {
-//   const members = await User.findAll({
-//     attributes: { exclude: ["password"] },
-//     where: { role_id: 2 }, // il faudrait modifier le "2" en dur par user.id par exemple, revoir Etienne pour ça
-//   });
-//   res.status(200).json(members);
-// };
-
 export const getOneMember = async (req, res) => {
   const { id } = req.user;
   if (req.user.id !== parseInt(id)) {
@@ -87,13 +79,4 @@ export const deleteMember = async (req, res) => {
   await memberToDelete.destroy();
 
   return res.status(204).json({ message: "Member deleted successfully" });
-  // const { id } = req.user;
-  // const member = await User.findByPk(id);
-  // if (member.id !== id || req.user.role_id !== 1)
-  //   res.status(401).json({ error: "Unauthorized access" });
-  // if (!member) {
-  //   return res.status(404).json({ error: "Member not found" });
-  // }
-  // await member.destroy();
-  // res.status(204).json({ message: "Member deleted" });
 };

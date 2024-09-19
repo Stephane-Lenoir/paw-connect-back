@@ -1,4 +1,4 @@
-import { User, Role, Request, Animal } from "../models/associations.js";
+import { User, Role } from "../models/associations.js";
 
 // Method to retrieve association data
 export const getAllAssociations = async (req, res) => {
@@ -31,17 +31,6 @@ export const getOneAssociation = async (req, res) => {
         as: "role",
         where: { id: 3 },
       },
-      // {
-      //   model: Request,
-      //   as: "requests",
-      //   where: { status: "En attente" },
-      //   include: [
-      //     {
-      //       model: Animal,
-      //       as: "request",
-      //     },
-      //   ],
-      // },
     ],
   });
 

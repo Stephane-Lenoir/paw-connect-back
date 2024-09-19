@@ -13,7 +13,6 @@ import { upload } from "../utils/multerConfig.js";
 export const router = Router();
 
 router.get("/animals", cw(animalController.getAllAnimals));
-// router.get("/animals/:id", cw(animalController.getOneAnimal));
 router.get(
   "/animals/:id",
   authenticateToken,
