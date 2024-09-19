@@ -19,6 +19,6 @@ router.use(searchRouter);
 router.use(userRouter);
 router.use(requestRouter);
 router.use(donationRouter);
-router.use('/donations', donationRouter);
+
 
 export { router };
