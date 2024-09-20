@@ -75,6 +75,8 @@ export const addAnimal = async (req, res) => {
 export const updateAnimal = async (req, res) => {
   const animalId = Number(req.params.id);
 
+  const userId = req.user.id;
+
   const {
     photo,
     name,
@@ -100,15 +102,17 @@ export const updateAnimal = async (req, res) => {
   // If no new file is provided, the existing photo remains unchanged
 
   // Update the animal's information
-  animal.name = name;
-  animal.species = species;
-  animal.description = description;
-  animal.race = race;
-  animal.gender = gender;
-  animal.location = location;
-  animal.photo;
-  animal.birthday = birthday;
-  animal.availability = availability;
+  Object.assign(animal, {
+    name,
+    species,
+    description,
+    race,
+    gender,
+    location,
+    birthday,
+    availability,
+    user_id: userId,
+  });
 
   // Save the changes to the database
   await animal.save();
@@ -117,12 +121,16 @@ export const updateAnimal = async (req, res) => {
 
 export const deleteAnimal = async (req, res) => {
   const { id } = req.params;
+  const userId = req.user.id;
+
   const animal = await Animal.findByPk(id);
   if (!animal) {
     return res.status(404).json({ error: "Animal not found" });
   }
   await animal.destroy();
-  res.status(204).json({ message: "Animal deleted successfully" });
+  res
+    .status(204)
+    .json({ message: "Animal deleted successfully", deletedBy: userId });
 };
 
 export const getAnimalsByUserId = async (req, res) => {

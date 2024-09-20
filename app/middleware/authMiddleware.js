@@ -26,9 +26,22 @@ export const authenticateToken = async (req, res, next) => {
   }
 };
 
-export const isAdmin = (req, res, next) => {
-  console.log(req.user);
-  if (req.user.role_id !== 1)
-    return res.status(401).json({ error: "Unauthorized access" });
-  next();
+// Constants for role IDs (adjust according to your system)
+export const isAdmin = 1;
+export const isMember = 2;
+export const isAssociation = 3;
+
+// Middleware to check if the user has any of the specified roles
+export const checkRole = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(403).json({ error: "No user attached to the request" });
+    }
+
+    if (allowedRoles.includes(req.user.role_id)) {
+      next();
+    } else {
+      res.status(403).json({ error: "Access denied" });
+    }
+  };
 };

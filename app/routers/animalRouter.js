@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { controllerWrapper as cw } from "../utils/controllerWrapper.js";
 import * as animalController from "../controllers/animalController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
+import {
+  authenticateToken,
+  checkRole,
+  isAdmin,
+  isAssociation,
+} from "../middleware/authMiddleware.js";
 import { fileRequest, validateRequest } from "../middleware/validateRequest.js";
 import {
   createAnimalSchema,
@@ -22,6 +27,7 @@ router.get(
 router.post(
   "/animals",
   authenticateToken,
+  checkRole(isAdmin, isAssociation),
   upload.single("photo"),
   validateRequest(createAnimalSchema),
   fileRequest(photoAnimalSchema),
@@ -29,9 +35,16 @@ router.post(
 );
 router.put(
   "/animals/:id",
+  authenticateToken,
+  checkRole(isAdmin, isAssociation),
   upload.single("photo"),
   validateRequest(updateAnimalSchema),
   fileRequest(photoAnimalSchema),
   cw(animalController.updateAnimal)
 );
-router.delete("/animals/:id", cw(animalController.deleteAnimal));
+router.delete(
+  "/animals/:id",
+  authenticateToken,
+  checkRole(isAdmin, isAssociation),
+  cw(animalController.deleteAnimal)
+);

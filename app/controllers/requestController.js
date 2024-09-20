@@ -1,8 +1,8 @@
-import { Association } from "sequelize";
 import { Request, User, Animal } from "../models/associations.js";
 
 // Give all Requests in DB
 export const getAllRequests = async (req, res) => {
+  const userId = req.user.id;
   const requests = await Request.findAll({
     include: [
       {
@@ -17,12 +17,13 @@ export const getAllRequests = async (req, res) => {
       },
     ],
   });
-  res.status(200).json(requests);
+  res.status(200).json({ requests, userId });
 };
 
 // Give one request by ID
 export const getOneRequest = async (req, res) => {
   const requestId = parseInt(req.params.id);
+  const userId = req.user.id;
 
   if (isNaN(requestId)) {
     return res.status(404).json({
@@ -38,7 +39,7 @@ export const getOneRequest = async (req, res) => {
       .json({ error: "Request not found. Please verify the provided ID." });
   }
 
-  res.status(200).json(request);
+  res.status(200).json({ request, userId });
 };
 
 // Add a request
@@ -59,6 +60,7 @@ export const addRequest = async (req, res) => {
 export const updateRequestStatus = async (req, res) => {
   const requestId = parseInt(req.params.id);
   const { status } = req.body;
+  const userId = req.user.id;
 
   const stateStatus = ["Acceptée", "Refusée"];
 
@@ -79,12 +81,13 @@ export const updateRequestStatus = async (req, res) => {
 
   await request.update({ status });
 
-  res.status(200).json(request);
+  res.status(200).json({ request, userId });
 };
 
 // Delete a request
 export const deleteRequest = async (req, res) => {
   const requestId = parseInt(req.params.id);
+  const userId = req.user.id;
 
   const request = await Request.findByPk(requestId);
 
@@ -96,5 +99,5 @@ export const deleteRequest = async (req, res) => {
 
   await request.destroy();
 
-  res.status(204).json({ message: "Request deleted" });
+  res.status(204).json({ message: "Request deleted", deletedBy: userId });
 };
