@@ -30,5 +30,12 @@ INSERT INTO "request" ("date", "status", "user_id", "animal_id") VALUES
 ('2024-03-10', 'Refusée', 4, 3),
 ('2024-03-15', 'En attente', 2, 5);
 
+-- Seeding for table "donation"
+INSERT INTO "donation" ("amount", "donor_name", "donor_email", "message", "status", "user_id") VALUES
+(50.00, 'Jean Dupont', 'jean.dupont@email.com', 'Merci pour votre travail !', 'completed', 5),
+(100.00, 'Sophie Martin', 'sophie.martin@email.com', 'Continuez votre excellent travail !', 'completed', 6),
+(75.50, 'Pierre Dubois', 'pierre.dubois@email.com', 'Heureux de soutenir votre cause', 'pending', 5),
+(200.00, 'Marie Lefebvre', 'marie.lefebvre@email.com', 'Pour nos amis à quatre pattes', 'completed', 6);
+
 
 COMMIT;

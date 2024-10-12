@@ -2,6 +2,7 @@ import { Animal } from "./Animal.js";
 import { Role } from "./Role.js";
 import { User } from "./User.js";
 import { Request } from "./Request.js";
+import { Donation } from "./Donation.js";
 
 // Role <-> User (One-to-Many)
 Role.hasMany(User, {
@@ -52,3 +53,17 @@ Request.belongsTo(Animal, {
 });
 
 export { Animal, Role, User, Request };
+
+// User <-> Donation (One-to-Many)
+User.hasMany(Donation, {
+  foreignKey: "user_id",
+  as: "donations",
+  onDelete: "CASCADE",
+});
+Donation.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "recipient",
+  onDelete: "CASCADE",
+});
+
+export { Donation };

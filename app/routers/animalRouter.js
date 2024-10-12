@@ -15,7 +15,7 @@ import {
 } from "../utils/validationSchemas.js";
 import { upload } from "../utils/multerConfig.js";
 
-export const router = Router();
+const router = Router();
 
 router.get("/animals", cw(animalController.getAllAnimals));
 router.get(
@@ -48,3 +48,5 @@ router.delete(
   checkRole(isAdmin, isAssociation),
   cw(animalController.deleteAnimal)
 );
+
+export { router };

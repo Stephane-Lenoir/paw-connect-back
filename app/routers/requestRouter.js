@@ -9,7 +9,7 @@ import {
   isMember,
 } from "../middleware/authMiddleware.js";
 
-export const router = Router();
+const router = Router();
 
 router.get(
   "/requests",
@@ -41,3 +41,5 @@ router.delete(
   checkRole(isAdmin),
   cw(requestController.deleteRequest)
 );
+
+export { router };

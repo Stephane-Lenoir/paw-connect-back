@@ -14,7 +14,7 @@ import {
   isAdmin,
 } from "../middleware/authMiddleware.js";
 
-export const router = Router();
+const router = Router();
 
 router.get(
   "/profiles/getAll",
@@ -35,3 +35,5 @@ router.delete(
   checkRole(isAdmin),
   cw(deleteMember)
 );
+
+export { router };

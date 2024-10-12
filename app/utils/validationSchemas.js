@@ -64,3 +64,12 @@ export const updateAnimalSchema = Joi.object({
   birthday: Joi.date().iso().optional(),
   availability: Joi.boolean().required(),
 });
+
+// Validation schema for donation
+export const donationSchema = Joi.object({
+  amount: Joi.number().positive().required(),
+  donorName: Joi.string().required().min(2).max(100),
+  donorEmail: Joi.string().email().required(),
+  message: Joi.string().allow('').max(500),
+  userId: Joi.number().integer().positive().required(),
+});
