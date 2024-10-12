@@ -157,7 +157,7 @@ const seedRequests = async () => {
   console.log("Requests seeded successfully");
 };
 
-const seedDatabase = async () => {
+export const seedDatabase = async () => {
   try {
     await seedRoles();
     await seedUsers();
@@ -169,4 +169,4 @@ const seedDatabase = async () => {
   }
 };
 
-seedDatabase();
+//seedDatabase();
