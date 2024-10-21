@@ -1,6 +1,7 @@
 import { Donation, User } from "../models/associations.js";
 import stripe from '../utils/stripeConfig.js';
 
+
 export const createDonation = async (req, res) => {
   const { amount, donorName, donorEmail, message, userId } = req.body;
   
