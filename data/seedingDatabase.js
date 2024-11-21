@@ -169,4 +169,4 @@ export const seedDatabase = async () => {
   }
 };
 
-//seedDatabase();
+seedDatabase();

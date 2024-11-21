@@ -26,6 +26,7 @@
     "pg": "^8.12.0",
     "sanitize-html": "^2.13.0",
     "sequelize": "^6.37.3",
+    "strip": "^3.0.0",
     "stripe": "^16.11.0"
   },
   "devDependencies": {
