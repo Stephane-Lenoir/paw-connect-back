@@ -11,15 +11,21 @@ app.use(express.static("public"));
 app.use("/uploads", express.static("public/uploads"));
 
 const allowedOrigins = [
-  , // Origine pour le développement
+  'http://localhost:3001', // Origine pour le développement
   'https://paw-connect-front-virid.vercel.app' // Origine pour la production
 ];
 
 const corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 
 app.use(cors(corsOptions));
