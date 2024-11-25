@@ -11,14 +11,13 @@ app.use(express.static("public"));
 app.use('/uploads', express.static('public/uploads'));
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "http://localhost:3001",
+  origin: process.env.CLIENT_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
