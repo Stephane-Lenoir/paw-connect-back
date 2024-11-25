@@ -11,7 +11,7 @@ app.use(express.static("public"));
 app.use('/uploads', express.static('public/uploads'));
 
 const corsOptions = {
-  origin: "http://localhost:3001",
+  origin: process.env.CLIENT_URL || "http://localhost:3001",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
   allowedHeaders: ["Content-Type", "Authorization"],
