@@ -5,34 +5,39 @@ import { Donation } from '../models/associations.js';
 export const createStripeSession = controllerWrapper(async (req, res) => {
   const { amount, userId, donorName, donorEmail, message, associationId } = req.body;
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price_data: {
-          currency: 'eur',
-          product_data: {
-            name: 'Donation',
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: 'Donation',
+            },
+            unit_amount: amount * 100, // Stripe utilise les centimes
           },
-          unit_amount: amount * 100, // Stripe utilise les centimes
+          quantity: 1,
         },
-        quantity: 1,
+      ],
+      mode: 'payment',
+      success_url: `${process.env.CLIENT_URL}/donation-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_URL}/donation-cancel`,
+      client_reference_id: userId || 'anonymous',
+      metadata: {
+        donorName,
+        donorEmail,
+        message,
+        associationId,
+        userId: userId || 'anonymous',
       },
-    ],
-    mode: 'payment',
-    success_url: `${process.env.FRONTEND_URL}/donation-success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.FRONTEND_URL}/donations`,
-    client_reference_id: userId || 'anonymous',
-    metadata: {
-      donorName,
-      donorEmail,
-      message,
-      associationId,
-      userId: userId || 'anonymous'
-    }
-  });
+    });
 
-  res.json({ id: session.id });
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error('Error creating Stripe session:', error);
+    res.status(500).json({ error: 'An error occurred while creating the Stripe session' });
+  }
 });
 
 export const checkSessionStatus = controllerWrapper(async (req, res) => {
