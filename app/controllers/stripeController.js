@@ -2,7 +2,7 @@ import stripe from '../utils/stripeConfig.js';
 import { controllerWrapper } from '../utils/controllerWrapper.js';
 import { Donation } from '../models/associations.js';
 
-export const createStripeSession = controllerWrapper(async (req, res) => {
+export const createStripeSession = async (req, res) => {
   const { amount, userId, donorName, donorEmail, message, associationId } = req.body;
 
   try {
@@ -38,9 +38,9 @@ export const createStripeSession = controllerWrapper(async (req, res) => {
     console.error('Error creating Stripe session:', error);
     res.status(500).json({ error: 'An error occurred while creating the Stripe session' });
   }
-});
+};
 
-export const checkSessionStatus = controllerWrapper(async (req, res) => {
+export const checkSessionStatus = async (req, res) => {
   const { sessionId } = req.params;
   
   try {
@@ -71,4 +71,4 @@ export const checkSessionStatus = controllerWrapper(async (req, res) => {
     console.error('Error checking session status:', error);
     res.status(500).json({ error: 'An error occurred while checking the session status' });
   }
-});
+};
