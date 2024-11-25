@@ -8,10 +8,15 @@ import "./app/models/associations.js";
 const app = express();
 
 app.use(express.static("public"));
-app.use('/uploads', express.static('public/uploads'));
+app.use("/uploads", express.static("public/uploads"));
+
+const allowedOrigins = [
+  , // Origine pour le développement
+  'https://paw-connect-front-virid.vercel.app' // Origine pour la production
+];
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: 'http://localhost:3001',
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -22,18 +27,25 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use("/api", router);
-
 
 const port = process.env.PORT || 3000;
 
-// Ajoutez ce bloc de code pour la synchronisation Sequelize
-sequelize.sync({ alter: true }).then(() => {
-  app.listen(port, () => {
-    console.log(`🚀 Server listening at http://localhost:${port}`);
-  });
-}).catch(error => {
-  console.error("Erreur lors de la synchronisation de la base de données:", error);
-});
+// Ajoutez ce bloc de code pour tester la connexion à la base
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ Connection to the database has been established successfully.");
 
+    // Synchronisation de la base de données
+    await sequelize.sync({ alter: true });
+    console.log("✅ Database synchronized successfully.");
+
+    // Démarrage du serveur après connexion et synchronisation réussies
+    app.listen(port, () => {
+      console.log(`🚀 Server listening at http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error("❌ Unable to connect to the database:", error);
+  }
+})();
