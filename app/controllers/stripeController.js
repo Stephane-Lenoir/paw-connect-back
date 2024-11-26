@@ -32,7 +32,7 @@ export const createStripeSession = async (req, res) => {
       },
     });
 
-    res.json({ id: session.id });
+    res.json({ sessionId: session.id });
   } catch (error) {
     console.error('Error creating Stripe session:', error);
     res.status(500).json({ error: 'An error occurred while creating the Stripe session' });
