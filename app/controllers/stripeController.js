@@ -1,5 +1,4 @@
 import stripe from '../utils/stripeConfig.js';
-import { controllerWrapper } from '../utils/controllerWrapper.js';
 import { Donation } from '../models/associations.js';
 
 export const createStripeSession = async (req, res) => {
